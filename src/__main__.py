@@ -4,10 +4,16 @@ Created on Jan 6, 2017
 @author: Bin
 '''
 
-from tkinter import *
+from tkinter import Button
+from tkinter import Entry
+from tkinter import Label
+from tkinter import PhotoImage
+from tkinter import Tk
 from tkinter import messagebox
+import matches
 
 entries = []
+songs = {'Sunny Day Song': 0}
 
 ## clears out entry boxes
 def clearEntries() :
@@ -16,11 +22,28 @@ def clearEntries() :
 
 ## writes submitted information into file
 def writeToFile():
-    for e in entries :
-        print(e.get())
+    with open("score_match_stats.txt", 'a') as file :
+        for e in entries :
+            file.write(e.get() + " ")
+        file.write("\n")
+    file.close()
+    clearEntries()
+
+## verifies the inputed song is a real song
+def verifySong() :
+    return
 
 ## facilitates input of information
 def inputAnswer() :
+    # check for missing fields
+    emptyFields = 0
+    for e in entries :
+        if (e.get() == "") :
+            emptyFields += 1
+    if (emptyFields > 0) :
+        messagebox.showinfo("Failed!", "Missing field(s)")
+        return
+            
     writeToFile()
     messagebox.showinfo("Success!", "Info submitted")
 
@@ -83,7 +106,9 @@ if __name__ == "__main__"  :
     clearButton = Button(gui, text = "Clear", cursor = "heart",
                                   command = clearEntries)
     clearButton.place(x = buttonX + 70, y = buttonY)
-    cancelButton = Button(gui, text = "Cancel", cursor = "heart")
+    cancelButton = Button(gui, text = "Cancel", cursor = "heart",
+                                  command = gui.quit)
     cancelButton.place(x = buttonX + 130, y = buttonY)
     
     gui.mainloop()
+    
