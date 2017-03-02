@@ -4,6 +4,8 @@ Created on Jan 8, 2017
 @author: Bin
 '''
 
+from tkinter import *
+
 class Match :
     
     def __init__(self, songName, score, combo, rank) :
@@ -14,12 +16,11 @@ class Match :
         
 class Song :
     
-    def __init__(self, songName, attribute, diff, fcCombo, maxScore, maxCombo,
+    def __init__(self, songName, attribute, fcCombo, maxScore, maxCombo,
                  avgScore, avgCombo, plays, fc) :
         
         self.songName  = songName
         self.attribute = attribute
-        self.diff      = diff
         self.fcCombo   = int(fcCombo)
         self.maxScore  = int(maxScore)
         self.maxCombo  = int(maxCombo)
@@ -53,6 +54,8 @@ class Song :
     def name (self) :
         return self.songName
     
+    def formattedName (self):
+        return self.songName.replace("_", " ")
         
     def fcRate(self) :
         return self.fc / self.plays
@@ -61,7 +64,6 @@ class Song :
     def write(self, file) :
         file.write(self.songName + " " + 
                    self.attribute + " " +
-                   self.diff + " " +
                    str(self.fcCombo) + " " +
                    str(self.maxScore) + " " +
                    str(self.maxCombo) + " " +
@@ -69,3 +71,5 @@ class Song :
                    str(self.avgCombo) + " " +
                    str(self.plays) + " " +
                    str(self.fc))
+
+# for adding songs to a score match
